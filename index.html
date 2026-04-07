@@ -5,9 +5,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Laboration 2 - TypeScript</title>
+    <link rel="stylesheet" href="src/css/style.css">
 </head>
 
 <body>
+    <main>
+        <h1>Att göra lista</h1>
+        <form>
+            <label for="todo-assign">Uppgift att göra</label>
+            <input type="text" name="todo-assign" id="todo-assign" placeholder="Skriv uppgift">
+            <br>
+            <label for="todo-priority">Prioritet för uppgift</label>
+            <input type="text" name="todo-priority" id="todo-priority" maxlength="1" placeholder="Skriv prioritet">
+            <br>
+            <button type="submit">Lägg till uppgift</button>
+        </form>
+        <div class="todos"></div>
+    </main>
     <script type="module" src="/src/main.ts"></script>
 </body>
 

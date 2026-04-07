@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One');
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: coral;
+}
+
+main {
+    background-color: azure;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1em;
+    font-family: 'Lilita One', sans-serif, cursive;
+    font-size: 1.1em;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+#todo-assign,
+#todo-priority,
+label,
+button {
+    width: 40%;
+    margin: 0 auto;
+}
+
+input {
+    border-radius: 8px;
+    padding: 0.5em 0.25em;
+    border-color: rgb(255, 136, 0);
+    border-width: 2px;
+    border-style: solid;
+}
+
+::placeholder {
+    color: rgba(107, 105, 105, 0.637);
+    font-family: 'Lilita One', sans-serif, cursive;
+}
+
+button {
+    font-family: 'Lilita One', sans-serif, cursive;
+    border-radius: 8px;
+    padding: 0.25em;
+    margin-top: 1em;
+    background-color: rgb(51, 255, 0);
+    color: rgb(0, 0, 0);
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: royalblue;
+    color: white;
+}
+
+button:active {
+    background-color: rgb(2, 96, 204);
+    color: rgb(255, 255, 255);
+}
+
+@media screen and (max-width: 500px) {
+    main {
+        font-size: 1em;
+    }
+    button {
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    main {
+        font-size: 0.9em;
+    }
+    button {
+        font-size: 0.9em;
+    }
+}
