@@ -35,10 +35,11 @@ span {
 
 span {
     font-size: 0.9em;
-    color: rgba(48, 47, 47, 0.637);
+    color: rgba(31, 30, 30, 0.637);
 }
 
 input {
+    width: 100%;
     border-radius: 8px;
     padding: 0.5em 0.25em;
     border-color: rgb(255, 136, 0);
@@ -70,6 +71,29 @@ button:hover {
 button:active {
     background-color: rgb(2, 96, 204);
     color: rgb(255, 255, 255);
+}
+
+#err-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-msg {
+    color: red;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.9em;
+}
+
+@media screen and (max-width: 768px) {
+    #todo-assign,
+    #todo-priority,
+    label,
+    button,
+    span {
+        width: 70%;
+    }
 }
 
 @media screen and (max-width: 500px) {

@@ -16,7 +16,7 @@ export class TodoList implements Todo {
 
     // När användaren lägger till en ny att göra uppgift
     public addTodo(task: string, priority: number): boolean {
-        if (task.length > 0 && priority >= 1 && priority <= 3) {
+        if (task.length > 0 && priority >= 1 && priority <= 3) { // Om man inte angivit en uppgift eller prioritet mellan 1-3 så skapas ingen ny todo
             const newTodo: Todo = {
                 task, completed: false, priority // Alla nya todos som skapas ska självklart inte vara completed därav false
             };
@@ -24,7 +24,7 @@ export class TodoList implements Todo {
             this.saveToLocalStorage(); // Sparar den nya uppgiften i localstorage
             return true;
         } else {
-            return false; // Om inget angivits eller gjorts på rätt sätt med prioritet så returnerar den false vilket kan användas för att visa ett felmeddelande i DOM
+            return false; // Om det inte angivits något i textfälten på rätt sätt returnerar den false vilket kan användas för att visa ett felmeddelande i DOM
         }
     }
 
@@ -36,36 +36,19 @@ export class TodoList implements Todo {
 
     // För att hämta todos-arrayen
     public getTodos(): Todo[] {
-        return this.todos;
+        return this.todos; // Returnerar hela arrayen med todos
     }
 
     // För att spara todos-arrayen inom localStorage 
     public saveToLocalStorage(): void {
-        localStorage.setItem("todos", JSON.stringify(this.todos))
+        localStorage.setItem("todos", JSON.stringify(this.todos)) // Sparar todos inom localstorage
     }
 
     // För att hämta todos-array från localStorage
     public loadFromLocalStorage(): void {
         const storedTodo = localStorage.getItem("todos");
-        if (storedTodo) {
+        if (storedTodo) { // Om det finns något sparat i localstorage
             this.todos = JSON.parse(storedTodo);
         }
     }
 }
-
-/*
-const todoList = new TodoList();
-
-todoList.addTodo("Cykla till jobbet", 2);
-todoList.addTodo("Städa utomhus", 3);
-todoList.addTodo("Laga matlådor", 1);
-
-let newTodo = new TodoList("Laga middag", false, 1);
-console.log(newTodo.addTodo)
-const todo1 = new TodoList("Cykla", false, 2);
-const todo2 = new TodoList("Städa utomhus", true, 3);
-const todo3 = new TodoList("Laga matlådor", false, 1);
-
-console.log(todo1);
-console.log(todo2);
-console.log(todo3);*/
