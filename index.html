@@ -11,16 +11,17 @@
 <body>
     <main>
         <h1>Att göra lista</h1>
-        <form>
+        <div id="errContainer"></div>
+        <form id="form">
             <label for="todo-assign">Uppgift att göra</label>
             <input type="text" name="todo-assign" id="todo-assign" placeholder="Skriv uppgift">
             <br>
-            <label for="todo-priority">Prioritet för uppgift</label>
+            <label for="todo-priority">Prioritet för uppgift</label><span>1 högst & 3 lägst</span>
             <input type="text" name="todo-priority" id="todo-priority" maxlength="1" placeholder="Skriv prioritet">
             <br>
             <button type="submit">Lägg till uppgift</button>
         </form>
-        <div class="todos"></div>
+        <div class="todo-list"></div>
     </main>
     <script type="module" src="/src/main.ts"></script>
 </body>

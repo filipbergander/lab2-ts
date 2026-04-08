@@ -27,9 +27,15 @@ form {
 #todo-assign,
 #todo-priority,
 label,
-button {
+button,
+span {
     width: 40%;
     margin: 0 auto;
+}
+
+span {
+    font-size: 0.9em;
+    color: rgba(48, 47, 47, 0.637);
 }
 
 input {

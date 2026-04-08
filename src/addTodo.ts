@@ -1,5 +1,5 @@
 // Importerar interfacet Todo
-import { Todo } from './interface';
+import { Todo } from './IfTodo';
 
 export class addTodo implements Todo {
     task: string;
