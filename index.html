@@ -18,13 +18,12 @@
             <label for="todo-assign">Uppgift att göra</label>
             <input type="text" name="todo-assign" id="todo-assign" placeholder="Skriv uppgift">
             <br>
-            <label for="todo-priority">Prioritet <span>(1 = högst, 3 = lägst)</span></label>
-            <input type="text" name="todo-priority" id="todo-priority" maxlength="1" placeholder="Skriv prioritet">
+            <label for="todo-priority">Prioritet <span class="span-priority">(1 = högst, 3 = lägst)</span></label>
+            <input type="text" name="todo-priority" id="todo-priority" maxlength="1" placeholder="Skriv prioritet för uppgift">
             <br>
             <button type="submit">Lägg till uppgift</button>
         </form>
-        <div class="todo-list">
-        </div>
+        <div id="todo-list"></div>
     </main>
     <script type="module" src="/src/main.ts"></script>
 </body>

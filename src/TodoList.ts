@@ -24,11 +24,12 @@ export class TodoList implements Todo {
             this.saveToLocalStorage(); // Sparar den nya uppgiften i localstorage
             return true;
         } else {
+            console.log("Användaren har inte angett en uppgift");
             return false; // Om det inte angivits något i textfälten på rätt sätt returnerar den false vilket kan användas för att visa ett felmeddelande i DOM
         }
     }
 
-    // När användaren markerar en uppgift som utförd
+    // När användaren markerar en uppgift som utförd, todoIndex är indexet i arrayen, exempelvis 0 för första uppgiften och sedan -> 1, 2 osv
     public markTodoCompleted(todoIndex: number): void {
         this.todos[todoIndex].completed = this.todos[todoIndex].completed ? false : true; // Switcha uppgiften mellan avklarad och ej avklarad, ternary operator
         this.saveToLocalStorage(); // Sparar ändringen till localstorage
