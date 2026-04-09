@@ -1,6 +1,6 @@
 // Importerar interfacet Todo
-/*
-import { Todo } from './IfTodo';
+
+/*import { Todo } from './IfTodo';
 import { TodoList } from './TodoList';
 
 export class addTodo {

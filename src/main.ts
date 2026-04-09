@@ -4,20 +4,44 @@ import { TodoList } from './TodoList';
 const todoList = new TodoList();
 
 document.addEventListener("DOMContentLoaded", () => {
+    renderTodos(); // Visar todos som finns lagrade i localstorage när sidan laddas in
     const form = document.getElementById("form") as HTMLFormElement;
+    const clearBtn = document.getElementById("delete-button") as HTMLButtonElement;
+    const sortBtn = document.getElementById("sort-button") as HTMLButtonElement;
+    let sorted = false;
+
     if (form) {
         form.addEventListener("submit", (event) => {
             event.preventDefault();
-            addTodo();
+            addTask();
+        });
+    }
+    if (clearBtn) {
+        clearBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            clearTodos();
+        });
+    }
+    if (sortBtn) {
+        sortBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            todoList.sortTodosByPriority();
+            renderTodos();
+            sorted = !sorted; // Om den är false blir den true och vice versa
+            if (sorted) {
+                todoList.sortTodosBackwardsByPriority();
+                renderTodos();
+            }
         });
     }
 })
 
 /**
- * För att lägga till en ny todo
+ * För att lägga till en ny uppgift/todo
  * @returns - Funktionen returnerar ingenting
  */
-function addTodo(): void {
+function addTask(): void {
+
     const taskInput = document.getElementById("todo-assign") as HTMLInputElement;
     const priorityInput = document.getElementById("todo-priority") as HTMLInputElement;
 
@@ -33,32 +57,18 @@ function addTodo(): void {
             errors.push("Ange namn på uppgift!"); // Om användaren inte angett en uppgift att göra i textfältet
         }
 
-        if (!priority) { // Om användaren inte angett en siffra som prioritet mellan numren 1-3 i textfältet
+        if (!priority || priority > 3) { // Om användaren inte angett en siffra som prioritet mellan numren 1-3 i textfältet
             errors.push("Ange en prioritet mellan siffrorna 1-3")
         }
-
         displayErrMsg(errors);
         return;
 
     } if (newAddedTask) { // Om det lyckas med att skapa en ny todo
-        renderTodos(); // Anropar funktion för att skapa innehållet i DOM
         taskInput.value = ""; // Nollställer textfälten
         priorityInput.value = "";
         removeErrorMsg(); // Tar bort eventuella felmeddelanden
-
-
+        renderTodos(); // Anropar funktion för att skapa innehållet i DOM
     }
-
-
-
-
-    // Resettar inputfälten
-    /* taskInput.value = "";
-     priorityInput.value = "";*/
-
-    /*
-    const newTodo = new TodoList(task, false, priority);
-    todoList.addTodo(newTodo);*/
 }
 
 /**
@@ -85,15 +95,17 @@ function displayErrMsg(errors: string[]): void {
  */
 function renderTodos(): void {
     const todoContainer = document.getElementById("todo-list") as HTMLDivElement;
+    const clearBtn = document.getElementById("delete-button") as HTMLButtonElement;
+
     todoContainer.innerHTML = ""; // Så att listan inte skapas flera gånger om
     const todos = todoList.getTodos(); // Hämtar in todos-arrayen från klassen
 
     todos.forEach((todo, index) => {
         // Skapar element
-        const div = document.createElement("div");
-        const p = document.createElement("p");
-        const span = document.createElement("span");
-        const checkbox = document.createElement("input");
+        const div = document.createElement("div") as HTMLDivElement;
+        const p = document.createElement("p") as HTMLParagraphElement;
+        const span = document.createElement("span") as HTMLSpanElement;
+        const checkbox = document.createElement("input") as HTMLInputElement;
 
         // Ger element klasser och typer för styling
         div.className = "todo-task";
@@ -107,10 +119,15 @@ function renderTodos(): void {
         checkbox.checked = todo.completed;
         checkbox.setAttribute("aria-label", todo.completed ? "Avklarad uppgift" : "Ej avklarad uppgift");
 
+        if (todo.completed) {
+            p.style.textDecoration = "line-through";
+            p.style.textDecorationThickness = "2px";
+        } else {
+            p.style.textDecoration = "none";
+        }
+
         // Vid klick på checkbox ändras textinnehållet samt false/true inom arrayen genom markTodoCompleted
         checkbox.addEventListener("change", () => {
-            p.style.textDecoration = todo.completed ? "none" : "line-through";
-            p.style.textDecorationThickness = "2px";
             todoList.markTodoCompleted(index);
             renderTodos();
         });
@@ -121,11 +138,11 @@ function renderTodos(): void {
         div.appendChild(p);
         todoContainer.appendChild(div);
     })
-}
 
-/*function printSavedTodos(): void {
- TodoList.loadFromLocalStorage();
-}*/
+    if (todos.length > 0 && clearBtn) {
+        clearBtn.classList.remove("hidden");
+    } else clearBtn.classList.add("hidden");
+}
 
 /**
  * För att ta bort felmeddelanden när användaren gör lyckad submit
@@ -133,4 +150,16 @@ function renderTodos(): void {
 function removeErrorMsg(): void {
     const errorArea = document.getElementById("error-area") as HTMLUListElement;
     errorArea.innerHTML = "";
+}
+
+function clearTodos(): void {
+    const todoContainer = document.getElementById("todo-list") as HTMLDivElement;
+    const clearBtn = document.getElementById("delete-button") as HTMLButtonElement;
+    if (clearBtn) {
+        alert("Vill du verkligen radera alla uppgifter?");
+        localStorage.clear();
+        todoList.clearTodos();
+        todoContainer.innerHTML = "";
+        clearBtn.classList.add("hidden"); // Knappen döljs när man raderar alla uppgifter
+    }
 }

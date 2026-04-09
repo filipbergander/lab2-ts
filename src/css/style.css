@@ -7,7 +7,7 @@ body {
 }
 
 main {
-    background-color: azure;
+    background-color: #f0ffff;
     max-width: 960px;
     margin: 0 auto;
     padding: 1em;
@@ -42,12 +42,17 @@ button,
 .p-todo {
     font-size: 1.1em;
     word-break: break-word;
+    overflow-wrap: break-word;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .span-todo {
-    margin-left: 50px;
+    margin-left: 1em;
     color: rgb(151, 22, 5);
-    font-size: 0.8em;
+    font-size: 0.9em;
+    white-space: nowrap;
 }
 
 input[type="text"] {
@@ -76,12 +81,28 @@ button {
     box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.548);
 }
 
-button:hover {
+#delete-button {
+    font-size: 1em;
+    width: 25%;
+    background-color: #DE0202;
+    color: white;
+    font-weight: normal;
+    letter-spacing: 1px;
+    padding: 0.15em;
+}
+
+.hidden {
+    display: none;
+}
+
+button:hover,
+#delete-button:hover {
     background-color: royalblue;
     color: white;
 }
 
-button:active {
+button:active,
+#delete-button:active {
     background-color: rgb(2, 96, 204);
     color: rgb(255, 255, 255);
 }
@@ -93,7 +114,7 @@ button:active {
 }
 
 .error-msg {
-    color: red;
+    color: #DE0202;
     font-weight: bold;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 0.9em;
@@ -122,7 +143,7 @@ input[type="checkbox"] {
     #todo-priority,
     label,
     button,
-    span {
+    .span-priority {
         width: 70%;
     }
 }
@@ -134,6 +155,12 @@ input[type="checkbox"] {
     button {
         font-size: 1em;
     }
+    #delete-button {
+        font-size: 0.8em;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        width: 50%;
+    }
 }
 
 @media screen and (max-width: 420px) {
@@ -142,5 +169,11 @@ input[type="checkbox"] {
     }
     button {
         font-size: 0.9em;
+    }
+    .p-todo {
+        font-size: 1em;
+    }
+    .span-todo {
+        font-size: 0.8em;
     }
 }
