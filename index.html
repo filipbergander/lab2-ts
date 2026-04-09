@@ -6,11 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Laboration 2 - TypeScript</title>
     <link rel="stylesheet" href="src/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
     <main>
-        <h1>Att göra lista</h1>
+        <h1>Att göra lista<svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#4488ee">
+                <path
+                    d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+            </svg></h1>
         <div id="err-container">
             <ul id="error-area"></ul>
         </div>
@@ -18,7 +22,8 @@
             <label for="todo-assign">Uppgift att göra</label>
             <input type="text" name="todo-assign" id="todo-assign" placeholder="Skriv uppgift">
             <br>
-            <label for="todo-priority">Prioritet <span class="span-priority">(1 = högst, 3 = lägst)</span></label>
+            <label for="todo-priority">Prioritet <span class="span-priority">(Högst prio: 1, lägst prio:
+                    3)</span></label>
             <input type="text" name="todo-priority" id="todo-priority" maxlength="1" placeholder="Skriv prioritet för uppgift">
             <br>
             <button type="submit" class="add-btn">Lägg till uppgift<svg xmlns="http://www.w3.org/2000/svg" height="24px"

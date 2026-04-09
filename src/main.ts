@@ -12,6 +12,7 @@ const clearBtn = document.getElementById("delete-button") as HTMLButtonElement;
 const sortBtn = document.getElementById("sort-button") as HTMLButtonElement;
 const sortIcon = document.getElementById("sort-icon") as HTMLElement;
 
+
 document.addEventListener("DOMContentLoaded", () => {
 
     renderTodos(); // Visar todos som finns lagrade i localstorage när sidan laddas in
@@ -28,25 +29,26 @@ document.addEventListener("DOMContentLoaded", () => {
         clearBtn.addEventListener("click", (event) => {
             event.preventDefault();
             clearTodos(); // Tömmer listan på alla todos
+            removeErrorMsg() // Tömmer eventuella felmeddelanden
         });
     }
-
-    // Sortera-knapp efter prioritet på todos
-    if (!sortBtn.classList.contains("hidden")) {
-        sortBtn.addEventListener("click", (event) => {
-            event.preventDefault();
-            rotate += 180; // För att rotera ikonen på knappen
-            sortIcon.style.transform = `rotate(${rotate}deg)`; // För att rotera ikonen på knappen
-            todoList.sortTodosByPriorityAsc(); // Sorterar efter prioritet
-            renderTodos();
-            sorted = !sorted; // Om den är false blir den true och vice versa
-            if (sorted) {
-                todoList.sortTodosByPriorityDesc(); // Sorterar prioriteten baklänges
+    //if (!sortBtn.classList.contains("hidden"))
+        // Sortera-knapp efter prioritet på todos
+        if (sortBtn && sortIcon) {
+            sortBtn.addEventListener("click", (event) => {
+                event.preventDefault();
+                rotate += 180; // För att rotera ikonen på knappen
+                sortIcon.style.transform = `rotate(${rotate}deg)`; // För att rotera ikonen på knappen
+                todoList.sortTodosByPriorityAsc(); // Sorterar efter prioritet
                 renderTodos();
-            }
-        });
-    }
-})
+                sorted = !sorted; // Om den är false blir den true och vice versa
+                if (sorted) {
+                    todoList.sortTodosByPriorityDesc(); // Sorterar prioriteten baklänges
+                    renderTodos();
+                }
+            });
+        }
+});
 
 /**
  * För att lägga till en ny uppgift/todo
@@ -73,6 +75,10 @@ function addTask(): void {
 
         if (!priority || priority > 3) { // Om användaren inte angett en siffra som prioritet mellan numren 1-3 i textfältet
             errors.push("Ange en prioritet mellan siffrorna 1-3")
+        }
+
+        if (todoList.getTodos().find(todo => todo.task === task)) { // Om användaren försöker skapa en uppgift som redan finns
+            errors.push("Du lagrar redan uppgiften!"); // Om användaren försöker skapa en uppgift som redan finns
         }
         displayErrMsg(errors); // Visar felmeddelanden
         return;
@@ -114,18 +120,34 @@ function renderTodos(): void {
     const todos = todoList.getTodos(); // Hämtar in todos-arrayen från klassen
     displayButtons();
     todos.forEach((todo, index) => {
+
         // Skapar element
         const div = document.createElement("div") as HTMLDivElement;
         const p = document.createElement("p") as HTMLParagraphElement;
         const span = document.createElement("span") as HTMLSpanElement;
         const checkbox = document.createElement("input") as HTMLInputElement;
+        const removeIcon = document.createElement("button") as HTMLButtonElement;
 
         // Ger element klasser och typer för styling
         div.className = "todo-task";
         p.className = "p-todo";
         span.className = "span-todo";
         checkbox.type = "checkbox";
+        removeIcon.className = "material-icons";
+        removeIcon.textContent = "delete";
+        removeIcon.setAttribute("aria-label", "Radera uppgiften");
+        removeIcon.setAttribute("data-index", index.toString()); //Ger data-index till varje delete ikon
 
+        if (removeIcon) {
+            removeIcon.addEventListener("click", (event) => {
+                event.preventDefault();
+                todoList.removeTodo(index);
+                renderTodos();
+                if (todoList.getTodos().length < 1) {
+                    hideButtons();
+                }
+            });
+        }
         // Ger elementen sina innehåll
         p.textContent = `${todo.task}`;
         span.textContent = `Prioritet: ${todo.priority}`;
@@ -149,6 +171,7 @@ function renderTodos(): void {
         div.appendChild(checkbox);
         p.appendChild(span);
         div.appendChild(p);
+        div.appendChild(removeIcon);
         todoContainer.appendChild(div);
     })
 }
@@ -180,10 +203,20 @@ function clearTodos(): void {
     }
 }
 
+/**
+ * Visar knappar som finns inom DOM genom att ta bort deras klass hidden
+ */
 function displayButtons(): void {
     // Visar knappen för att sortera (prioritet), och för att radera alla todos om det finns mer än 1 lagrad todo
     if (todoList.getTodos().length > 1 && sortBtn && clearBtn) {
         sortBtn.classList.remove("hidden");
         clearBtn.classList.remove("hidden");
+    }
+}
+
+function hideButtons(): void {
+    if (todoList.getTodos().length <= 0) {
+        sortBtn.classList.add("hidden"); // Sortera-knappen döljs
+        clearBtn.classList.add("hidden"); // Knappen döljs när man raderar alla uppgifter
     }
 }

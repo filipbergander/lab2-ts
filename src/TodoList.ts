@@ -11,11 +11,11 @@ export class TodoList {
     }
     // När användaren lägger till en ny att göra uppgift
     public addTodo(task: string, priority: number): boolean {
-        if (task.length > 0 && priority >= 1 && priority <= 3) { // Om man inte angivit en uppgift eller prioritet mellan 1-3 så skapas ingen ny todo
+        if (task.length > 0 && priority >= 1 && priority <= 3 && !this.todos.find(todo => todo.task === task)) { // Om man inte angivit en uppgift eller prioritet mellan 1-3 så skapas ingen ny todo
             const newTodo: Todo = {
                 task, completed: false, priority // Alla nya todos som skapas ska självklart inte vara completed därav false
             };
-            this.todos.push(newTodo); // Lägger till den nya uppgiften som objekt i arrayen
+            this.todos.unshift(newTodo); // Lägger till den nya uppgiften som objekt först i arrayen
             this.saveToLocalStorage(); // Sparar den nya uppgiften i localstorage
             return true;
         } else {
@@ -43,7 +43,7 @@ export class TodoList {
     public loadFromLocalStorage(): void {
         const storedTodo = localStorage.getItem("todos");
         if (storedTodo) { // Om det finns något sparat i localstorage
-            this.todos = JSON.parse(storedTodo);
+            this.todos = JSON.parse(storedTodo); // Hämtar in arrayen från localstorage för att kunna visa i DOM
         }
     }
     // För att radera alla uppgifter i todo-listan och localstorage
@@ -59,5 +59,11 @@ export class TodoList {
     // För att sortera todos i den omvända ordningen
     public sortTodosByPriorityDesc(): void {
         this.todos.sort((a, b) => b.priority - a.priority);
+    }
+
+    // För att ta bort en uppgift inom listan av todos
+    public removeTodo(index: number): void {
+        this.todos.splice(index, 1); // Tar bort en specifik todo från arrayen
+        this.saveToLocalStorage(); // Sparar ändringen i localstorage
     }
 }

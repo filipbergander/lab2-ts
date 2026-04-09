@@ -74,7 +74,7 @@ button {
     border-radius: 8px;
     padding: 0.25em;
     margin: 1em auto;
-    background-color: rgb(51, 255, 0);
+    background-color: #33ff00;
     color: rgb(0, 0, 0);
     font-size: 1.1em;
     cursor: pointer;
@@ -85,6 +85,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: 0.3s ease;
 }
 
 #delete-button {
@@ -98,6 +99,7 @@ button {
     font-weight: normal;
     letter-spacing: 1px;
     padding: 0.15em;
+    transition: 0.3s ease;
 }
 
 #sort-button {
@@ -111,10 +113,31 @@ button {
     color: white;
     font-weight: normal;
     padding: 0.1em;
+    transition: 0.3s ease;
 }
 
-.hidden {
-    display: none !important;
+.material-icons {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    transition: .2s ease;
+    cursor: pointer;
+    scale: 1.2;
+    color: rgb(255, 0, 0);
+    margin-right: 0.5em;
+    width: 5%;
+    padding: 0;
+}
+
+.material-icons:hover {
+    scale: 1.7;
+    background-color: transparent;
+    color: red;
+    fill: black;
+}
+
+#remove-task-icon {
+    margin-left: auto;
 }
 
 button:hover,
@@ -131,8 +154,13 @@ button:active,
     color: rgb(255, 255, 255);
 }
 
+.add-btn svg {
+    transition: 0.3s ease;
+}
+
 .add-btn:hover svg {
     fill: white;
+    color: white;
 }
 
 #err-container {
@@ -169,6 +197,10 @@ input[type="checkbox"] {
     border-radius: 8px;
     margin: 0 12px;
     cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
 }
 
 @media screen and (max-width: 768px) {
