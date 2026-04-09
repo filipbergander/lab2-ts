@@ -12,7 +12,6 @@ const clearBtn = document.getElementById("delete-button") as HTMLButtonElement;
 const sortBtn = document.getElementById("sort-button") as HTMLButtonElement;
 const sortIcon = document.getElementById("sort-icon") as HTMLElement;
 
-
 document.addEventListener("DOMContentLoaded", () => {
 
     renderTodos(); // Visar todos som finns lagrade i localstorage när sidan laddas in
@@ -32,22 +31,22 @@ document.addEventListener("DOMContentLoaded", () => {
             removeErrorMsg() // Tömmer eventuella felmeddelanden
         });
     }
-    //if (!sortBtn.classList.contains("hidden"))
-        // Sortera-knapp efter prioritet på todos
-        if (sortBtn && sortIcon) {
-            sortBtn.addEventListener("click", (event) => {
-                event.preventDefault();
-                rotate += 180; // För att rotera ikonen på knappen
-                sortIcon.style.transform = `rotate(${rotate}deg)`; // För att rotera ikonen på knappen
-                todoList.sortTodosByPriorityAsc(); // Sorterar efter prioritet
+
+    // Sortera-knapp efter prioritet på todos
+    if (sortBtn && sortIcon) {
+        sortBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            rotate += 180; // För att rotera ikonen på knappen
+            sortIcon.style.transform = `rotate(${rotate}deg)`; // För att rotera ikonen på knappen
+            todoList.sortTodosByPriorityAsc(); // Sorterar efter prioritet
+            renderTodos();
+            sorted = !sorted; // Om den är false blir den true och vice versa
+            if (sorted) {
+                todoList.sortTodosByPriorityDesc(); // Sorterar prioriteten baklänges
                 renderTodos();
-                sorted = !sorted; // Om den är false blir den true och vice versa
-                if (sorted) {
-                    todoList.sortTodosByPriorityDesc(); // Sorterar prioriteten baklänges
-                    renderTodos();
-                }
-            });
-        }
+            }
+        });
+    }
 });
 
 /**
@@ -78,7 +77,7 @@ function addTask(): void {
         }
 
         if (todoList.getTodos().find(todo => todo.task === task)) { // Om användaren försöker skapa en uppgift som redan finns
-            errors.push("Du lagrar redan uppgiften!"); // Om användaren försöker skapa en uppgift som redan finns
+            errors.push("Du lagrar redan uppgiften!");
         }
         displayErrMsg(errors); // Visar felmeddelanden
         return;
@@ -96,17 +95,20 @@ function addTask(): void {
  * @param errors - En array som innehåller alla felmeddelanden
  */
 function displayErrMsg(errors: string[]): void {
+    // Element inom HTML
     const errContainer = document.getElementById("err-container") as HTMLDivElement;
     const errorArea = document.getElementById("error-area") as HTMLUListElement;
 
     if (errContainer) {
         errorArea.innerHTML = ""; // Rensar för att inte skapa felmeddelanden på felmeddelanden
+
+        // Utskrift
         errors.forEach((error) => {
             const errListEl = document.createElement("li"); // Skapar ett li-element
             errListEl.textContent = error; // Varje li-element får sitt innehåll som det tillhörande felmeddelandet
             errListEl.classList.add("error-msg"); // Klass för styling
             errorArea.appendChild(errListEl); // Lägger till varje li inom ul
-        })
+        });
     }
 }
 
@@ -134,10 +136,11 @@ function renderTodos(): void {
         span.className = "span-todo";
         checkbox.type = "checkbox";
         removeIcon.className = "material-icons";
-        removeIcon.textContent = "delete";
-        removeIcon.setAttribute("aria-label", "Radera uppgiften");
-        removeIcon.setAttribute("data-index", index.toString()); //Ger data-index till varje delete ikon
+        removeIcon.textContent = "delete"; // För att skapa en "soptunna" som ikon på knappen genom material-icons
+        removeIcon.setAttribute("aria-label", "Radera uppgiften"); // Tillgänglighet
+        removeIcon.setAttribute("data-index", index.toString()); //Ger ett index till varje delete ikon
 
+        // Vid klick på delete-ikonen så raderas en specifik todo inom listan
         if (removeIcon) {
             removeIcon.addEventListener("click", (event) => {
                 event.preventDefault();
@@ -148,12 +151,14 @@ function renderTodos(): void {
                 }
             });
         }
-        // Ger elementen sina innehåll
+
+        // Ger övriga element sitt innehåll
         p.textContent = `${todo.task}`;
         span.textContent = `Prioritet: ${todo.priority}`;
         checkbox.checked = todo.completed;
         checkbox.setAttribute("aria-label", todo.completed ? "Avklarad uppgift" : "Ej avklarad uppgift");
 
+        // Styling på avklarade uppgifter
         if (todo.completed) {
             p.style.textDecoration = "line-through";
             p.style.textDecorationThickness = "2px";
@@ -181,7 +186,7 @@ function renderTodos(): void {
  */
 function removeErrorMsg(): void {
     const errorArea = document.getElementById("error-area") as HTMLUListElement;
-    errorArea.innerHTML = "";
+    errorArea.innerHTML = ""; // Tömmer
 }
 
 /**
@@ -209,14 +214,18 @@ function clearTodos(): void {
 function displayButtons(): void {
     // Visar knappen för att sortera (prioritet), och för att radera alla todos om det finns mer än 1 lagrad todo
     if (todoList.getTodos().length > 1 && sortBtn && clearBtn) {
-        sortBtn.classList.remove("hidden");
+        sortBtn.classList.remove("hidden"); // Visar
         clearBtn.classList.remove("hidden");
     }
 }
 
+/**
+ * Döljer knappar som finns inom DOM genom att lägga till deras klass hidden
+ */
 function hideButtons(): void {
-    if (todoList.getTodos().length <= 0) {
+    // Om det inte finns några todos så döljs knapparna
+    if (todoList.getTodos().length < 1) {
         sortBtn.classList.add("hidden"); // Sortera-knappen döljs
-        clearBtn.classList.add("hidden"); // Knappen döljs när man raderar alla uppgifter
+        clearBtn.classList.add("hidden"); // Knappen för att radera alla todos döljs såklart när man raderar alla uppgifter
     }
 }
