@@ -5,7 +5,7 @@ import { Todo } from './IfTodo';
 export class TodoList {
     private todos: Todo[] = []; // Array för todo-objekt
 
-    // Konstruktor som används för att ladda in sparade todos från localStorage
+    // Konstruktor som används för att ladda in sparade todos från localStorage och körs när nya todolist objekt skapas
     constructor() {
         this.loadFromlocalStorage();
     }

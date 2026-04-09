@@ -92,8 +92,9 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1em;
+    font-size: 0.9em;
     width: 25%;
+    min-width: 225px;
     background-color: #DE0202;
     color: white;
     font-weight: normal;
@@ -224,7 +225,8 @@ input[type="checkbox"] {
         font-size: 0.8em;
         word-break: break-word;
         overflow-wrap: break-word;
-        width: 50%;
+        width: 40%;
+        min-width: 200px;
     }
     #sort-button {
         font-size: 0.8em;
@@ -247,5 +249,20 @@ input[type="checkbox"] {
     }
     .span-todo {
         font-size: 0.8em;
+    }
+    #delete-button {
+        width: 35%;
+        min-width: 0;
+    }
+    #delete-button svg {
+        min-width: 20px;
+        min-height: 20px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    #delete-button {
+        width: 50%;
+        min-width: 0;
     }
 }
