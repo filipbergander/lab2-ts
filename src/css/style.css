@@ -81,7 +81,16 @@ button {
     box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.548);
 }
 
+.add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #delete-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 1em;
     width: 25%;
     background-color: #DE0202;
@@ -91,20 +100,39 @@ button {
     padding: 0.15em;
 }
 
+#sort-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    min-width: 125px;
+    width: 15%;
+    background-color: #646464;
+    color: white;
+    font-weight: normal;
+    padding: 0.1em;
+}
+
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 button:hover,
-#delete-button:hover {
+#delete-button:hover,
+#sort-button:hover {
     background-color: royalblue;
     color: white;
 }
 
 button:active,
-#delete-button:active {
+#delete-button:active,
+#sort-button:active {
     background-color: rgb(2, 96, 204);
     color: rgb(255, 255, 255);
+}
+
+.add-btn:hover svg {
+    fill: white;
 }
 
 #err-container {
@@ -132,10 +160,15 @@ button:active,
     box-shadow: 0 0 10px 2px rgb(202, 202, 202);
 }
 
+.todo-task:hover {
+    background-color: rgb(250, 248, 248);
+}
+
 input[type="checkbox"] {
     scale: 1.7;
     border-radius: 8px;
     margin: 0 12px;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
@@ -160,6 +193,13 @@ input[type="checkbox"] {
         word-break: break-word;
         overflow-wrap: break-word;
         width: 50%;
+    }
+    #sort-button {
+        font-size: 0.8em;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        width: 10%;
+        min-width: 100px;
     }
 }
 

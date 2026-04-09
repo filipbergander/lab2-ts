@@ -1,35 +1,47 @@
 // Hämtar in klassen för todo-listan
 import { TodoList } from './TodoList';
 
-const todoList = new TodoList();
+const todoList = new TodoList(); // Instans av klassen för att använda metoder som finns där
+
+let sorted = false; // För att kunna sortera todos efter prioritet
+let rotate = 0; // För att rotera ikonen på sortera knappen när man klickar på den
+
+// Element inom HTML
+const form = document.getElementById("form") as HTMLFormElement;
+const clearBtn = document.getElementById("delete-button") as HTMLButtonElement;
+const sortBtn = document.getElementById("sort-button") as HTMLButtonElement;
+const sortIcon = document.getElementById("sort-icon") as HTMLElement;
 
 document.addEventListener("DOMContentLoaded", () => {
-    renderTodos(); // Visar todos som finns lagrade i localstorage när sidan laddas in
-    const form = document.getElementById("form") as HTMLFormElement;
-    const clearBtn = document.getElementById("delete-button") as HTMLButtonElement;
-    const sortBtn = document.getElementById("sort-button") as HTMLButtonElement;
-    let sorted = false;
 
-    if (form) {
+    renderTodos(); // Visar todos som finns lagrade i localstorage när sidan laddas in
+
+    if (form) {// När formuläret submittas skapas en ny todo
         form.addEventListener("submit", (event) => {
             event.preventDefault();
-            addTask();
+            addTask(); // Lägger till ny todo
         });
     }
+
+    // Vid klick på radera-knappen för uppgifter så raderas alla todos
     if (clearBtn) {
         clearBtn.addEventListener("click", (event) => {
             event.preventDefault();
-            clearTodos();
+            clearTodos(); // Tömmer listan på alla todos
         });
     }
-    if (sortBtn) {
+
+    // Sortera-knapp efter prioritet på todos
+    if (!sortBtn.classList.contains("hidden")) {
         sortBtn.addEventListener("click", (event) => {
             event.preventDefault();
-            todoList.sortTodosByPriority();
+            rotate += 180; // För att rotera ikonen på knappen
+            sortIcon.style.transform = `rotate(${rotate}deg)`; // För att rotera ikonen på knappen
+            todoList.sortTodosByPriorityAsc(); // Sorterar efter prioritet
             renderTodos();
             sorted = !sorted; // Om den är false blir den true och vice versa
             if (sorted) {
-                todoList.sortTodosBackwardsByPriority();
+                todoList.sortTodosByPriorityDesc(); // Sorterar prioriteten baklänges
                 renderTodos();
             }
         });
@@ -41,15 +53,17 @@ document.addEventListener("DOMContentLoaded", () => {
  * @returns - Funktionen returnerar ingenting
  */
 function addTask(): void {
-
+    // Inputfälten inom formuläret
     const taskInput = document.getElementById("todo-assign") as HTMLInputElement;
     const priorityInput = document.getElementById("todo-priority") as HTMLInputElement;
 
+    // Värdena inom inputfälten som anges av användaren
     const task: string = taskInput.value.trim();
     const priority: number = Number(priorityInput.value);
 
+    // Skapar en ny todo enligt metoden inom klassen
     const newAddedTask = todoList.addTodo(task, priority);
-    const errors: string[] = [];
+    const errors: string[] = []; // En array för felmeddelanden
 
     if (!newAddedTask) { // Om det misslyckades med att skapa en ny todo ges felmeddelanden
 
@@ -60,7 +74,7 @@ function addTask(): void {
         if (!priority || priority > 3) { // Om användaren inte angett en siffra som prioritet mellan numren 1-3 i textfältet
             errors.push("Ange en prioritet mellan siffrorna 1-3")
         }
-        displayErrMsg(errors);
+        displayErrMsg(errors); // Visar felmeddelanden
         return;
 
     } if (newAddedTask) { // Om det lyckas med att skapa en ny todo
@@ -95,11 +109,10 @@ function displayErrMsg(errors: string[]): void {
  */
 function renderTodos(): void {
     const todoContainer = document.getElementById("todo-list") as HTMLDivElement;
-    const clearBtn = document.getElementById("delete-button") as HTMLButtonElement;
 
     todoContainer.innerHTML = ""; // Så att listan inte skapas flera gånger om
     const todos = todoList.getTodos(); // Hämtar in todos-arrayen från klassen
-
+    displayButtons();
     todos.forEach((todo, index) => {
         // Skapar element
         const div = document.createElement("div") as HTMLDivElement;
@@ -138,10 +151,6 @@ function renderTodos(): void {
         div.appendChild(p);
         todoContainer.appendChild(div);
     })
-
-    if (todos.length > 0 && clearBtn) {
-        clearBtn.classList.remove("hidden");
-    } else clearBtn.classList.add("hidden");
 }
 
 /**
@@ -152,14 +161,29 @@ function removeErrorMsg(): void {
     errorArea.innerHTML = "";
 }
 
+/**
+ * För att radera alla uppgifter inom listan av todos
+ */
 function clearTodos(): void {
+    // Element inom HTML
     const todoContainer = document.getElementById("todo-list") as HTMLDivElement;
     const clearBtn = document.getElementById("delete-button") as HTMLButtonElement;
+    const sortBtn = document.getElementById("sort-button") as HTMLButtonElement;
+
     if (clearBtn) {
-        alert("Vill du verkligen radera alla uppgifter?");
-        localStorage.clear();
-        todoList.clearTodos();
-        todoContainer.innerHTML = "";
+        const confirmClear = confirm("Vill du verkligen radera alla uppgifter?"); // Confirm för att radera alla todos
+        if (!confirmClear) return; // Om man inte klickar på OK så körs inte resten av funktionen
+        todoList.clearTodos(); // Tömmer arrayen
+        todoContainer.innerHTML = ""; // Tömmer DOM på innehållet
+        sortBtn.classList.add("hidden"); // Sortera-knappen döljs
         clearBtn.classList.add("hidden"); // Knappen döljs när man raderar alla uppgifter
+    }
+}
+
+function displayButtons(): void {
+    // Visar knappen för att sortera (prioritet), och för att radera alla todos om det finns mer än 1 lagrad todo
+    if (todoList.getTodos().length > 1 && sortBtn && clearBtn) {
+        sortBtn.classList.remove("hidden");
+        clearBtn.classList.remove("hidden");
     }
 }

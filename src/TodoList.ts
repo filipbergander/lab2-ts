@@ -46,17 +46,18 @@ export class TodoList {
             this.todos = JSON.parse(storedTodo);
         }
     }
-    // För att radera alla uppgifter i todo-listan
+    // För att radera alla uppgifter i todo-listan och localstorage
     public clearTodos(): void {
-        this.todos = [];
+        this.todos = []; // Tömmer arrayen
+        localStorage.clear();// Tömmer localstorage
     }
     // För att kunna sortera todos efter deras prioriteter
-    public sortTodosByPriority(): void {
+    public sortTodosByPriorityAsc(): void {
         this.todos.sort((a, b) => a.priority - b.priority);
     }
-    
+
     // För att sortera todos i den omvända ordningen
-    public sortTodosBackwardsByPriority(): void {
+    public sortTodosByPriorityDesc(): void {
         this.todos.sort((a, b) => b.priority - a.priority);
     }
 }
