@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One');
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: coral;
+}
+
+main {
+    background-color: #f0ffff;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1em;
+    font-family: 'Lilita One', sans-serif, cursive;
+    font-size: 1.1em;
+    border-radius: 0 0 12px 12px;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    color: rgb(43, 42, 41);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+#todo-assign,
+#todo-priority,
+label,
+button,
+.span-priority {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.span-priority {
+    font-size: 0.9em;
+    color: rgba(31, 30, 30, 0.637);
+}
+
+.p-todo {
+    font-size: 1.1em;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.span-todo {
+    margin-left: 1em;
+    color: rgb(151, 22, 5);
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+input[type="text"] {
+    width: 100%;
+    border-radius: 8px;
+    padding: 0.5em 0.25em;
+    border-color: rgb(255, 136, 0);
+    border-width: 2px;
+    border-style: solid;
+}
+
+::placeholder {
+    color: rgba(107, 105, 105, 0.637);
+    font-family: 'Lilita One', sans-serif, cursive;
+}
+
+button {
+    font-family: 'Lilita One', sans-serif, cursive;
+    border-radius: 8px;
+    padding: 0.25em;
+    margin: 1em auto;
+    background-color: #33ff00;
+    color: rgb(0, 0, 0);
+    font-size: 1.1em;
+    cursor: pointer;
+    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.548);
+}
+
+.add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease;
+}
+
+#delete-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9em;
+    width: 25%;
+    min-width: 225px;
+    background-color: #DE0202;
+    color: white;
+    font-weight: normal;
+    letter-spacing: 1px;
+    padding: 0.15em;
+    transition: 0.3s ease;
+}
+
+#sort-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    min-width: 125px;
+    width: 15%;
+    background-color: #646464;
+    color: white;
+    font-weight: normal;
+    padding: 0.1em;
+    transition: 0.3s ease;
+}
+
+.material-icons {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    transition: .2s ease;
+    cursor: pointer;
+    scale: 1.2;
+    color: rgb(255, 0, 0);
+    margin-right: 0.5em;
+    width: 5%;
+    padding: 0;
+}
+
+.material-icons:hover {
+    scale: 1.7;
+    background-color: transparent;
+    color: red;
+    fill: black;
+}
+
+#remove-task-icon {
+    margin-left: auto;
+}
+
+button:hover,
+#delete-button:hover,
+#sort-button:hover {
+    background-color: royalblue;
+    color: white;
+}
+
+button:active,
+#delete-button:active,
+#sort-button:active {
+    background-color: rgb(2, 96, 204);
+    color: rgb(255, 255, 255);
+}
+
+.add-btn svg {
+    transition: 0.3s ease;
+}
+
+.add-btn:hover svg {
+    fill: white;
+    color: white;
+}
+
+#err-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-msg {
+    color: #DE0202;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.9em;
+}
+
+.todo-task {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    width: 100%;
+    max-width: 100%;
+    background-color: rgb(224, 224, 224);
+    margin-bottom: 1em;
+    border-radius: 4px;
+    box-shadow: 0 0 10px 2px rgb(202, 202, 202);
+}
+
+.todo-task:hover {
+    background-color: rgb(250, 248, 248);
+}
+
+input[type="checkbox"] {
+    scale: 1.7;
+    border-radius: 8px;
+    margin: 0 12px;
+    cursor: pointer;
+}
+
+.before-todo-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 1em auto 0.1em;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+    #todo-assign,
+    #todo-priority,
+    label,
+    button,
+    .span-priority {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    main {
+        font-size: 1em;
+    }
+    button {
+        font-size: 1em;
+    }
+    #delete-button {
+        font-size: 0.8em;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        width: 40%;
+        min-width: 200px;
+    }
+    #sort-button {
+        font-size: 0.8em;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        width: 10%;
+        min-width: 100px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    main {
+        font-size: 0.9em;
+    }
+    button {
+        font-size: 0.9em;
+    }
+    .p-todo {
+        font-size: 1em;
+    }
+    .span-todo {
+        font-size: 0.8em;
+    }
+    #delete-button {
+        width: 35%;
+        min-width: 0;
+    }
+    #delete-button svg {
+        min-width: 20px;
+        min-height: 20px;
+    }
+    h2 {
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    #delete-button {
+        width: 50%;
+        min-width: 0;
+    }
+}
