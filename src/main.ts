@@ -11,6 +11,7 @@ const form = document.getElementById("form") as HTMLFormElement;
 const clearBtn = document.getElementById("delete-button") as HTMLButtonElement;
 const sortBtn = document.getElementById("sort-button") as HTMLButtonElement;
 const sortIcon = document.getElementById("sort-icon") as HTMLElement;
+const headlineSecond = document.getElementById("headline-second") as HTMLHeadingElement;
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -117,6 +118,9 @@ function displayErrMsg(errors: string[]): void {
  */
 function renderTodos(): void {
     const todoContainer = document.getElementById("todo-list") as HTMLDivElement;
+    if (todoList.getTodos().length > 0) {
+        headlineSecond.classList.remove("hidden"); // Visar rubriken "Mina uppgifter" när det väl finns uppgifter
+    }
 
     todoContainer.innerHTML = ""; // Så att listan inte skapas flera gånger om
     const todos = todoList.getTodos(); // Hämtar in todos-arrayen från klassen
@@ -204,6 +208,7 @@ function clearTodos(): void {
         todoList.clearTodos(); // Tömmer arrayen
         todoContainer.innerHTML = ""; // Tömmer DOM på innehållet
         sortBtn.classList.add("hidden"); // Sortera-knappen döljs
+        headlineSecond.classList.add("hidden"); // Döljer h2-rubriken
         clearBtn.classList.add("hidden"); // Knappen döljs när man raderar alla uppgifter
     }
 }
@@ -227,5 +232,6 @@ function hideButtons(): void {
     if (todoList.getTodos().length < 1) {
         sortBtn.classList.add("hidden"); // Sortera-knappen döljs
         clearBtn.classList.add("hidden"); // Knappen för att radera alla todos döljs såklart när man raderar alla uppgifter
+        headlineSecond.classList.add("hidden"); // Döljer h2-rubriken
     }
 }

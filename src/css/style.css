@@ -20,6 +20,10 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    color: rgb(43, 42, 41);
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -200,6 +204,14 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
+.before-todo-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 1em auto 0.1em;
+}
+
 .hidden {
     display: none !important;
 }
@@ -257,6 +269,9 @@ input[type="checkbox"] {
     #delete-button svg {
         min-width: 20px;
         min-height: 20px;
+    }
+    h2 {
+        font-size: 1.2em;
     }
 }
 
