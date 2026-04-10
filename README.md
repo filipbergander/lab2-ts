@@ -3,6 +3,9 @@
 I denna laboration inom TypeScript skapar jag en applikation för användare att skriva ned sina "Att göra uppgifter" som också kallas Todos.
 VITE används som paket för att automatisera och optimera applikationens innehåll.
 
+**Webbplats:** https://todo-lab2-fb.netlify.app/
+
+
 <p align="center">
 <img width="600" height="455" alt="skärmbild-github" src="https://github.com/user-attachments/assets/939203ac-82eb-463a-9cd9-8307794b9521" />
 </p>
